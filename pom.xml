@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.wonsunahn</groupId>
-  <artifactId>cs1632-cicd-pipelines</artifactId>
+  <artifactId>cs1632-cicd-pipelines-dgt</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
 
@@ -40,7 +40,6 @@
       <name>GitHub Apache Maven Packages</name>
       <url>https://maven.pkg.github.com/CS1632-Spring2024/supplementary-exercise-4-ci-cd-pipelines-DavidGTeklea</url>
     </repository>
-    <artifactId>cs1632-cicd-pipelines-dgt</artifactId>
   </distributionManagement>
 
   <properties>
