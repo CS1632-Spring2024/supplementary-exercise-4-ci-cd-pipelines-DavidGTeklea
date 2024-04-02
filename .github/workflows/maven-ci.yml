@@ -49,9 +49,29 @@ jobs:
       with:
         key: cached-build-${{github.sha}}
         path: .
-     - name: SonarCloud
-       needs: [maven_test]  # Enforces that maven_test runs first
-        on:
+     
+  # Uploads dependency graph to GitHub to receive Dependabot alerts 
+  update_dependence_graph:
+    
+    needs: [maven_test]  # Enforces that maven_test runs first
+    
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Restore cached build
+      uses: actions/cache@v3
+      with:
+        key: cached-build-${{github.sha}}
+        path: .
+    # https://github.com/marketplace/actions/maven-dependency-tree-dependency-submission
+    - name: Update dependency graph
+      uses: advanced-security/maven-dependency-submission-action@v3
+name: SonarCloud
+on:
+needs: [maven_test]  # Enforces that maven_test runs first
           push:
             branches:
               - main
@@ -90,23 +110,4 @@ jobs:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CS1632-Spring2024_supplementary-exercise-4-ci-cd-pipelines-DavidGTeklea
 
-  # Uploads dependency graph to GitHub to receive Dependabot alerts 
-  update_dependence_graph:
-    
-    needs: [maven_test]  # Enforces that maven_test runs first
-    
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-    - name: Restore cached build
-      uses: actions/cache@v3
-      with:
-        key: cached-build-${{github.sha}}
-        path: .
-    # https://github.com/marketplace/actions/maven-dependency-tree-dependency-submission
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@v3
     
